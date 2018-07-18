@@ -1,0 +1,42 @@
+{
+  "name": "harvester",
+  "productName": "Twitter Analytics Dashboard",
+  "version": "0.1.2",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "package-mac": "electron-packager .",
+    "package-win": "electron-packager . Twitter_Analytics_Dashboard --overwrite --asar=true --platform=win32 --arch=ia32 --prune=true --out=release-builds"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "JSON": "^1.0.0",
+    "ajv": "^6.5.1",
+    "app": "^0.1.0",
+    "dependencies": "0.0.1",
+    "dialog": "^0.3.1",
+    "electron-context-menu": "^0.10.0",
+    "jquery": "^3.3.1",
+    "json": "^9.0.6",
+    "menu": "^0.2.5",
+    "natural": "^0.6.1",
+    "string": "^3.3.3",
+    "twit": "^2.2.11"
+  },
+  "build": {
+    "appId": "harvester.id",
+    "mac": {
+      "category": "twitter"
+    }
+  },
+  "devDependencies": {
+    "electron": "^2.0.3",
+    "electron-builder": "^20.22.0",
+    "electron-packager": "^12.1.0"
+  }
+}

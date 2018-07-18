@@ -1,0 +1,44 @@
+
+.tabContainer{
+    width: 100%;
+    height: 100%;
+}
+.tabContainer .buttonContainer{
+    height: 10%;
+}
+.tabContainer .buttonContainer button{
+    width: 20%;
+    height: 100%;
+    float: left;
+    border: none;
+    outline:none;
+    padding: 10px;
+    font-size: 36px;
+    font-weight: bold;
+    color: grey;
+    background-color: white;
+}
+.tabContainer .buttonContainer button:hover{
+    color: lightgrey;
+}
+.tabContainer .buttonContainer button:active{
+    color: black;
+    transform: translateY(1px);
+}
+
+.horizonal-pane-group{
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	align-items: center;
+	align-content: stretch;
+}
+
+.horizonal-pane{
+  border-top: 1px solid #ddd;
+}
+
+.horizonal-pane:first-child {
+    border-top: 0;
+}

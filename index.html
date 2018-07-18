@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Twitter Analytics Dasboard</title>
+        <link rel="stylesheet" href="./style.css">
+        <link rel="stylesheet" href="./assets/button.css">
+        <link rel="stylesheet" href="./photon/dist/css/photon.min.css">
+    </head>
+    <body class="window">
+        <div class="padded-more" style="-webkit-app-region: drag">
+            <h1 style="text-align: center">
+                <strong>Twitter Analytics Dashboard</strong> <span class="icon icon-twitter" style="color: #006ac8"></span>
+            </h1>
+        </div>
+        <div class="tabContainer">
+            <div class="buttonContainer">
+                <button onclick="showPanel(0)"><span class="icon icon-download"></span> Harvest</button>
+                <button onclick="showPanel(1)"><span class="icon icon-list"></span> Refine</button>
+                <button onclick="showPanel(2)"><span class="icon icon-droplet"></span> Clean Data</button>
+                <button onclick="showPanel(3)"><span class="icon icon-chart-pie"></span> Analyse</button>
+                <button onclick="showPanel(4)"><span class="icon icon-picture"></span> Visualise</button>
+            </div>
+            <!-- Harvesting -->
+            <div class="tabPanel">
+                <div class="pane-group" style="position: relative;">
+                    <div class="pane pane-one-fourth">
+                        <div class="padded-more">
+                            <h1><span class="icon icon-key"></span> API keys</h1>
+                            <div>These are needed to access Twitter. Go to www.apps.twitter.com to get yours.</div>
+                            <div class="form-group">
+                                <label>consumer_key:</label>
+                                <input id="consumer_key" type="text" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>consumer_secret:</label>
+                                <input id="consumer_secret" type="text" class="form-control" required>
+                            </div>
+                            <div class="button button-save" id="api_keys_save">Remember API keys</div>
+                        </div>
+                    </div>
+                    <div class="pane pane-one-fourth">
+                        <div class="padded-more">
+                            <h1><span class="icon icon-search"></span> Search</h1>
+                            <div class="form-group">
+                                <label><strong>Query:</strong></label>
+                                <input id="searchbox" type="search" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label><strong>Number of tweets:</strong></label>
+                                <input id="number" type="number" class="form-control" min="1" max="100">
+                            </div>
+                            <div>Date range:</div>
+                            <div class="form-group">
+                                <label>From:</label>
+                                <input id="start-date" type="date" class="form-control">
+                            </div>
+                            <div>
+                                <label>To:</label>
+                                <input id="end-date" type="date" class="form-control">
+                            </div>
+                            <!-- <div class="radio">
+                                <label>
+                                    <input type="radio" name="radios" value="any" checked>
+                  
+                                    Any language
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="radios" value="en+">
+                                    English and unknown
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="radios" value="en">
+                                    English only
+                                </label>
+                            </div> -->
+                        </div>
+                        <div style="padding-top: 10px; padding-left:20px">
+                                <div class="button button-save" id="save-search-parameters">Save search</div>
+                                <div class="button button-save" id="load-search-parameters">Load search</div>
+                                <div class="button button-clear" id="clear-search-parameters">Clear search</div>
+                        </div>
+                        <div style="padding-top: 10px; padding-left:20px">
+                            <div class="button button-action" id="search">Search</div>
+                        </div>
+                    </div>
+                    <div class="pane ">
+                        <div class="padded-more">
+                            <h1><span class="icon icon-list"></span> Results <span id="search-count" style="color: lightgray"></span></h1>
+                            <div style="height:400px;width:100%;overflow:auto;border: 1px solid; border-radius: 4px; border-color: lightgrey">
+                                <table class="table-striped" id="tweet_table">
+                                </table>
+                            </div>
+                            <div class="padded-more">
+                                <div class="button button-save" id="save-results">Save Results</div>
+                                <div class="button button-clear" id="clear-results">Discard Results</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="padded-more" style="text-align: right; bottom: 0%">
+                    <div class="button button-next" id="to-clean">Next <span class="icon icon-right-bold"></span>
+                    </div>
+                </div>
+            </div>
+            <!-- Data Refinement -->
+            <div class="tabPanel">
+                <div class="pane-group" style="position: relative;">
+                    <div class="pane pane-one-fourth">
+                        <div class="padded-more">
+                            <h1><span class="icon icon-level-down"></span> Input tweets <span id="filter-input-count" style="color: lightgray"></span></h1>
+                            <div style="height:200px;width:100%;overflow:auto;padding-top:20px;border: 1px solid; border-radius: 4px; border-color: lightgrey">
+                                <table class="table-striped" id="filter-input">
+                                </table>
+                            </div>
+                            <h1><span class="icon icon-folder"></span> Load from files</h1>
+                            <div style="padding-top: 10px; padding-bottom: 10px">
+                                <div id="open-refine-tweets" class="button button-save">Choose files</div>
+                                <div id="clear-refine-tweets" class="button button-clear">Clear</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pane pane-one-fourth">
+                        <div class="padded-more">
+                            <h1><span class="icon icon-target"></span> Filter</h1>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="include-retweets">Include retweets
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="include-replies">Include replies
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="remove-duplicates" checked>Remove duplicates
+                                </label>
+                            </div>
+                            <h1>Advanced Filters</h1>
+                            <div class="form-group">
+                                <label>Matching regular expression:</label>
+                                <input id="regex-filter" type="text" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div style="padding-top: 10px; padding-left:20px">
+                            <div class="button button-save" id="save-filter-parameters">Save filters</div>
+                            <div class="button button-save" id="load-filter-parameters">Load filters</div>
+                            <div class="button button-clear" id="clear-filter-parameters">Clear filters</div>
+                        </div>
+                        <div style="padding-top: 10px; padding-left:20px">
+                            <div class="button button-action" id="filter">Apply filter</div>
+                        </div>
+                    </div>
+                    <div class="pane">
+                        <div class="padded-more">
+                            <h1><span class="icon icon-list"></span> Results <span id="refine-count" style="color: lightgray"></span></h1>
+                            <div style="height:400px;width:100%;overflow:auto;border: 1px solid; border-radius: 4px; border-color: lightgrey">
+                                    <table class="table-striped" id="refine-results-table">
+                                    </table>
+                            </div>
+                            <div class="padded-more">
+                                <div class="button button-save" id="save-filter-results">Save Results</div>
+                                <div class="button button-clear" id="clear-filter-results">Discard Results</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="padded-more" style="text-align: right; bottom: 0%">
+                    <div class="button button-next" id="to-clean">Next <span class="icon icon-right-bold"></span>
+                    </div>
+                </div>
+            </div>
+            <!-- Data Cleaning -->
+            <div class="tabPanel">
+
+            </div>
+            <!-- Analysis -->
+            <div class="tabPanel">
+                
+            </div>
+            <!-- Visualisation -->
+            <div class="tabPanel">
+                
+            </div>
+        </div>
+        <script src="./node_modules/jquery/dist/jquery.js"></script>
+        <script src="./main.js"></script>
+        <script src="./nav.js"></script>
+        <script src="./sections/refine.js"></script>
+        <script src="./sections/harvest.js"></script>
+    </body>
+</html>

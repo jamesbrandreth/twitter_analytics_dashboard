@@ -1,0 +1,92 @@
+.button{
+    display: inline-block;
+    padding: 3px 8px;
+    margin-bottom: 0;
+    font-size: 12px;
+    line-height: 1.4;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.06);
+    -webkit-app-region: no-drag;
+}
+
+.button:active{
+    transform: translateY(1px);
+}
+
+.button-default{
+    background-color: white;
+    border-color: darkslategrey;
+    color: black;
+    text-emphasis: bold;
+}
+.button-default:hover{
+    background-color: darkslategrey;
+    color: white;
+}
+.button-default:active{
+    background-color: darkgrey;
+    color: white;
+}
+
+.button-save{
+    background-color: white;
+    border-color: rgb(132, 196, 132);
+    color: black;
+    text-emphasis: bold;
+}
+.button-save:hover{
+    background-color: rgb(132, 196, 132);
+    color: white;
+}
+.button-save:active{
+    background-color: rgb(77, 161, 77);
+    border-color: rgb(77, 161, 77);
+    color: white;
+}
+
+.button-clear{
+    background-color: white;
+    border-color: palevioletred;
+    color: black;
+    text-emphasis: bold;
+}
+.button-clear:hover{
+    background-color: palevioletred;
+    color: white;
+}
+.button-clear:active{
+    background-color: orangered;
+    color: white;
+}
+
+.button-action{
+    background-color: rgb(64, 134, 240);
+    color: white;
+    text-emphasis: bold;
+}
+.button-action:hover{
+    background-color: rgb(128, 167, 226);
+    color: white;
+}
+.button-action:active{
+    background-color: rgb(65, 105, 165);
+    color: white;
+}
+
+.button-next{
+    font-size: 24px;
+    background-color: white;
+    border-color: lightgrey;
+    color: black;
+    text-emphasis: bold;
+    font-weight: bold;
+    bottom: 0%;
+}
+.button-next:hover{
+    background-color: lightgrey;
+    color: black;
+}

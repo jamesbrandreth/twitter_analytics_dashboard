@@ -1,0 +1,10 @@
+
+node_modules/
+
+redundant/
+
+photon/
+
+*.lock
+
+\.DS_Store
