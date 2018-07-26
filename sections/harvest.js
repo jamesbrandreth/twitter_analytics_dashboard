@@ -150,9 +150,9 @@ btn_clear_results.onclick = function(){
 };
 
 // To clean:
-var btn_to_clean = document.getElementById("to-clean");
-btn_to_clean.onclick = function(){
+var btn_to_filter = document.getElementById("to-filter");
+btn_to_filter.onclick = function(){
     showPanel(1);
     filter_input = harvest_output;
-    updateInputTable();
+    updateRefineInputTable();
 };

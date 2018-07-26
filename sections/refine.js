@@ -1,6 +1,6 @@
 var files = new Array;
 
-function updateInputTable(){
+function updateRefineInputTable(){
     var table = document.getElementById('filter-input');
     table.innerHTML = "";
     for (var i = 0; i < filter_input.length; i++){
@@ -10,7 +10,7 @@ function updateInputTable(){
     document.getElementById("filter-input-count").innerHTML = "    " + String(filter_input.length);
 };
 
-function loadFiles(){
+function loadFiles_filter(){
     for(var i=0; i<files.length;i++){
         var file_content = fs.readFileSync(files[i]);
         var tweets = String(file_content).trim().split("\n");
@@ -18,7 +18,7 @@ function loadFiles(){
             filter_input.push(JSON.parse(tweets[j]));
         }
     };
-    updateInputTable();
+    updateRefineInputTable();
 };
 
 function tweetIsRetweet(tweet){
@@ -30,7 +30,7 @@ function tweetIsRetweet(tweet){
 };
 
 function tweetIsReply(tweet){
-    if(tweet.in_reply_to_status_id == null){
+    if(tweet.in_reply_to_status_id != null){
         return true;
     }else{
         return false;
@@ -39,7 +39,16 @@ function tweetIsReply(tweet){
 
 function tweetMatchesRegex(tweet,regex){
     return RegExp(regex).test(tweet.text);
-}
+};
+
+function isInList(obj,list){
+    for(var i=0; i<list.length; i++){
+        if(lodash.isEqual(obj,list[i])){
+            return true;
+        };
+    };
+    return false;
+};
 
 function updateRefineResultsTable(){
     var table = document.getElementById('refine-results-table');
@@ -60,13 +69,13 @@ var regex = document.getElementById("regex-filter");
 var open_button = document.getElementById("open-refine-tweets");
 open_button.onclick = function(){
     files = dialog.showOpenDialog();
-    loadFiles();
+    loadFiles_filter();
 };
 
 var  btn_refine_clear_input = document.getElementById("clear-refine-tweets");
 btn_refine_clear_input.onclick = function(){
     filter_input = [];
-    updateInputTable();
+    updateRefineInputTable();
 };
 
 // save filters
@@ -105,6 +114,7 @@ btn_clear_filters.onclick = function(){
 // Apply filters and update table
 var btn_apply_filters = document.getElementById("filter");
 btn_apply_filters.onclick = function(){
+    filter_output = new Array;
     for(var i=0; i<filter_input.length;i++){
         var pass = true;
         tweet = filter_input[i];
@@ -116,6 +126,11 @@ btn_apply_filters.onclick = function(){
         };
         if(checkbox_replies.checked==false){
             if(tweetIsReply(tweet)){
+                pass = false;
+            }
+        };
+        if(checkbox_duplicates.checked==true){
+            if(isInList(tweet,filter_output)){
                 pass = false;
             }
         };
@@ -151,4 +166,12 @@ var btn_clear_refine_results = document.getElementById('clear-filter-results');
 btn_clear_refine_results.onclick = function(){
     filter_output = new Array;
     updateRefineResultsTable();
+};
+
+// To clean:
+var btn_to_clean = document.getElementById("to-clean");
+btn_to_clean.onclick = function(){
+    showPanel(2);
+    clean_input = filter_output;
+    updateCleanInputTable();
 };
