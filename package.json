@@ -18,6 +18,7 @@
     "JSON": "^1.0.0",
     "ajv": "^6.5.1",
     "app": "^0.1.0",
+    "chosen-js": "^1.8.7",
     "dependencies": "0.0.1",
     "dialog": "^0.3.1",
     "electron-context-menu": "^0.10.0",
@@ -29,6 +30,9 @@
     "natural": "^0.6.1",
     "string": "^3.3.3",
     "twit": "^2.2.11",
+    "wink": "0.0.1",
+    "wink-bm25-text-search": "^2.0.5",
+    "wink-lemmatizer": "^2.0.0",
     "wink-nlp-utils": "^1.9.0"
   },
   "build": {

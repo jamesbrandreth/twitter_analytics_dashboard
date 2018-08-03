@@ -66,12 +66,14 @@ var checkbox_replies = document.getElementById("include-replies");
 var checkbox_duplicates = document.getElementById("remove-duplicates");
 var regex = document.getElementById("regex-filter");
 
+// load files
 var open_button = document.getElementById("open-refine-tweets");
 open_button.onclick = function(){
     files = dialog.showOpenDialog();
     loadFiles_filter();
 };
 
+// clear input
 var  btn_refine_clear_input = document.getElementById("clear-refine-tweets");
 btn_refine_clear_input.onclick = function(){
     filter_input = [];
