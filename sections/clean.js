@@ -35,21 +35,18 @@ function cleanTweet(tweet){
 function processTweets(tweets){
     var tweets_set = new Array;
     for(var i=0;i<tweets.length;i++){
-        tweets_set.push({original: tweets[i], cleaned: cleanTweet(tweets[i])});
+        tweets_set.push({'original': tweets[i], 'cleaned': cleanTweet(tweets[i])});
     }
+    return tweets_set;
 }
 
-function stringifyTweets(tweets){
-    var out_tweets = new Array;
-    for(var i=0;i<tweets.length;i++){
-        var str_tweet;
-        var tweet = tweets[i];
-        for(var j=0;j<tweet.length;j++){
-            str_tweet += ' ' + tweet[i];
-        }
-        out_tweets.push(str_tweet);
-    }
-    return out_tweets;
+function stringifyTweet(tweet){
+    var str_tweet = '';
+    var tweet = tweet['cleaned'];
+    for(var i=0;i<tweet.length;i++){
+        str_tweet += ' ' + tweet[i];
+    };
+    return str_tweet;
 };
 
 function updateCleanResultsTable(){
@@ -57,7 +54,8 @@ function updateCleanResultsTable(){
     table.innerHTML = "";
     for (var i = 0; i < clean_output.length; i++){
         var row = table.insertRow(i);
-        row.innerHTML = clean_output[i].substring(0,70);
+        console.log(clean_output[i]['cleaned'])
+        row.innerHTML = stringifyTweet(clean_output[i]).substring(0,70);
     }
     document.getElementById("clean-count").innerHTML = "    " + String(clean_output.length);
 };
