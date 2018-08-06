@@ -16,7 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "JSON": "^1.0.0",
-    "ajv": "^6.5.1",
+    "ajv": "^6.5.2",
     "app": "^0.1.0",
     "chosen-js": "^1.8.7",
     "dependencies": "0.0.1",
@@ -42,8 +42,8 @@
     }
   },
   "devDependencies": {
-    "electron": "^2.0.3",
-    "electron-builder": "^20.22.0",
+    "electron": "^2.0.6",
+    "electron-builder": "^20.26.1",
     "electron-packager": "^12.1.0"
   }
 }
