@@ -20,6 +20,7 @@
 }
 .tabContainer .buttonContainer button:hover{
     color: grey;
+    /* text-shadow: 0 0 400px lightgrey */
 }
 .tabContainer .buttonContainer button:active{
     color: black;
