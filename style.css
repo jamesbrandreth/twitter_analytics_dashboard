@@ -15,11 +15,11 @@
     padding: 10px;
     font-size: 36px;
     font-weight: bold;
-    color: grey;
+    color: lightgrey;
     background-color: white;
 }
 .tabContainer .buttonContainer button:hover{
-    color: lightgrey;
+    color: grey;
 }
 .tabContainer .buttonContainer button:active{
     color: black;
