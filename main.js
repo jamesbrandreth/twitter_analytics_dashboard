@@ -25,9 +25,6 @@ var clean_input = new Array;
 var clean_output = new Array;
 
 var analysis_input = new Array;
-var analysis_output = new Array;
-
-var visualisation_input = new Array;
 
 // var files = new Array;
 

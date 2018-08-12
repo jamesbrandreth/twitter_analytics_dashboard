@@ -1,7 +1,6 @@
 
 const nlp = require('wink-nlp-utils');
 // const bm25 = require('wink-bm25-text-search');
-// const lemmatize = require('wink-lemmatizer');
 // const posTagger = require( 'wink-pos-tagger' );
 
 function updateCleanInputTable(){
@@ -34,6 +33,7 @@ function cleanTweet(tweet){
 
 function processTweets(tweets){
     var tweets_set = new Array;
+
     for(var i=0;i<tweets.length;i++){
         tweets_set.push({'original': tweets[i], 'cleaned': cleanTweet(tweets[i])});
     }
@@ -60,6 +60,7 @@ function updateCleanResultsTable(){
     document.getElementById("clean-count").innerHTML = "    " + String(clean_output.length);
 };
 
+// GO!
 var btn_clean = document.getElementById('clean');
 btn_clean.onclick = function(){
     console.log('click');
@@ -68,8 +69,72 @@ btn_clean.onclick = function(){
 }
 
 // load files
-var open_button = document.getElementById("open-clean-tweets");
-open_button.onclick = function(){
+var clean_open_button = document.getElementById("open-clean-tweets");
+clean_open_button.onclick = function(){
     var files = dialog.showOpenDialog();
     loadFiles_clean();
+};
+
+// Read Parameters from screen
+function readParameters(){
+    var parameters = {};
+    parameters.rm_urls = document.getElementById('remove-urls').checked;
+    parameters.lowercase = document.getElementById('lowercase').checked;
+    parameters.alphanumerics = document.getElementById('remove-non-alphanumerics').checked;
+    parameters.stopwords = document.getElementById('remove-stopwords').checked;
+    parameters.lemmatize = document.getElementById('lemmatize').checked;
+    parameters.stem = document.getElementById('stem').checked;
+    parameters.tokenise = document.getElementById('tokenise').checked;
+    console.log(parameters);
+    return parameters;
+};
+
+// Save Parameters
+var save_clean_parameters = document.getElementById('save-clean-parameters');
+save_clean_parameters.onclick = function(){
+    var filepath = dialog.showSaveDialog({
+		filters: [{
+		  name: 'TAD process parameters',
+		  extensions: ['TADp']
+		}]
+    });
+    fs.writeFile(filepath,JSON.stringify(readParameters()));
+};
+
+// Load parameters
+var load_clean_parameters = document.getElementById('load-clean-parameters');
+load_clean_parameters.onclick = function(){
+    var filepath = String(dialog.showOpenDialog());
+    var parameters = JSON.parse(fs.readFileSync(filepath));
+    document.getElementById('remove-urls').checked = parameters.rm_urls;
+    document.getElementById('lowercase').checked = parameters.lowercase;
+    document.getElementById('remove-non-alphanumerics').checked = parameters.alphanumerics;
+    document.getElementById('remove-stopwords').checked =  parameters.stopwords;
+    document.getElementById('lemmatize').checked = parameters.lemmatize;
+    document.getElementById('stem').checked = parameters.stem;
+    document.getElementById('tokenise').checked = parameters.tokenise;
+};
+
+// clear parameters
+function clearCleanParameters(){
+    document.getElementById('remove-urls').checked = true;
+    document.getElementById('lowercase').checked = true;
+    document.getElementById('remove-non-alphanumerics').checked = true;
+    document.getElementById('remove-stopwords').checked = true;
+    document.getElementById('lemmatize').checked = false;
+    document.getElementById('stem').checked = false;
+    document.getElementById('tokenise').checked = true;
+}
+var clear_clean_parameters = document.getElementById('clear-clean-parameters');
+clear_clean_parameters.onclick = clearCleanParameters;
+
+// initisalise default parameters:
+clearCleanParameters();
+
+// next button:
+var btn_to_analyse = document.getElementById('to-analyse');
+btn_to_analyse.onclick = function(){
+    showPanel(3);
+    analysis_input = clean_output;
+    // updateAnalyseInputTable();
 };
