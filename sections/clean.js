@@ -3,6 +3,19 @@ const nlp = require('wink-nlp-utils');
 // const bm25 = require('wink-bm25-text-search');
 // const posTagger = require( 'wink-pos-tagger' );
 
+
+// Read Parameters from screen
+function readParameters(){
+    var parameters = {};
+    parameters.rm_urls = document.getElementById('remove-urls').checked;
+    parameters.lowercase = document.getElementById('lowercase').checked;
+    parameters.alphanumerics = document.getElementById('remove-non-alphanumerics').checked;
+    parameters.stopwords = document.getElementById('remove-stopwords').checked;
+    parameters.lemmatize = document.getElementById('lemmatize').checked;
+    parameters.stem = document.getElementById('stem').checked;
+    return parameters;
+};
+
 function updateCleanInputTable(){
     var table = document.getElementById('clean-input');
     table.innerHTML = "";
@@ -24,18 +37,29 @@ function loadFiles_clean(files){
     updateCleanInputTable();
 };
 
-function cleanTweet(tweet){
-    var tweet_body = tweet.text;
-    var str_clean = nlp.string.lowerCase(nlp.string.retainAlphaNums(tweet_body));
-    var tokens = nlp.tokens.removeWords(nlp.string.tokenize(str_clean));
+function cleanTweet(tweet, parameters){
+    var text = tweet.text;
+    if(parameters.rm_urls==true){
+
+    }
+    if(parameters.lowercase==true){
+        text = nlp.string.lowerCase(text);
+    }
+    if(parameters.alphanumerics==true){
+        text = nlp.string.retainAlphaNums(text);
+    }
+    var tokens = nlp.string.tokenize(text);
+    if(parameters.stopwords==true){
+        tokens = nlp.tokens.removeWords(tokens);
+    }
     return tokens;
 };
 
-function processTweets(tweets){
+function processTweets(tweets,parameters){
     var tweets_set = new Array;
 
     for(var i=0;i<tweets.length;i++){
-        tweets_set.push({'original': tweets[i], 'cleaned': cleanTweet(tweets[i])});
+        tweets_set.push({'original': tweets[i], 'cleaned': cleanTweet(tweets[i],parameters)});
     }
     return tweets_set;
 }
@@ -64,7 +88,7 @@ function updateCleanResultsTable(){
 var btn_clean = document.getElementById('clean');
 btn_clean.onclick = function(){
     console.log('click');
-    clean_output = processTweets(clean_input);
+    clean_output = processTweets(clean_input,readParameters());
     updateCleanResultsTable();
 }
 
@@ -72,21 +96,7 @@ btn_clean.onclick = function(){
 var clean_open_button = document.getElementById("open-clean-tweets");
 clean_open_button.onclick = function(){
     var files = dialog.showOpenDialog();
-    loadFiles_clean();
-};
-
-// Read Parameters from screen
-function readParameters(){
-    var parameters = {};
-    parameters.rm_urls = document.getElementById('remove-urls').checked;
-    parameters.lowercase = document.getElementById('lowercase').checked;
-    parameters.alphanumerics = document.getElementById('remove-non-alphanumerics').checked;
-    parameters.stopwords = document.getElementById('remove-stopwords').checked;
-    parameters.lemmatize = document.getElementById('lemmatize').checked;
-    parameters.stem = document.getElementById('stem').checked;
-    parameters.tokenise = document.getElementById('tokenise').checked;
-    console.log(parameters);
-    return parameters;
+    loadFiles_clean(files);
 };
 
 // Save Parameters
@@ -112,7 +122,6 @@ load_clean_parameters.onclick = function(){
     document.getElementById('remove-stopwords').checked =  parameters.stopwords;
     document.getElementById('lemmatize').checked = parameters.lemmatize;
     document.getElementById('stem').checked = parameters.stem;
-    document.getElementById('tokenise').checked = parameters.tokenise;
 };
 
 // clear parameters
@@ -123,13 +132,46 @@ function clearCleanParameters(){
     document.getElementById('remove-stopwords').checked = true;
     document.getElementById('lemmatize').checked = false;
     document.getElementById('stem').checked = false;
-    document.getElementById('tokenise').checked = true;
-}
+};
 var clear_clean_parameters = document.getElementById('clear-clean-parameters');
 clear_clean_parameters.onclick = clearCleanParameters;
 
 // initisalise default parameters:
 clearCleanParameters();
+// make lemmtise and stem mutually exlusive
+var checkbox_lemma = document.getElementById('lemmatize');
+var checkbox_stem = document.getElementById('stem');
+checkbox_lemma.onchange = function(){
+    if(checkbox_lemma.checked==true){
+        checkbox_stem.checked = false;
+    }
+};
+checkbox_stem.onchange = function(){
+    if(checkbox_stem.checked==true){
+        checkbox_lemma.checked = false;
+    }
+};
+
+// discard results:
+var btn_clear_clean_results = document.getElementById('clear-clean-results');
+btn_clear_clean_results.onclick = function(){
+    clean_output = null;
+    updateCleanResultsTable();
+}
+
+// save results:
+var btn_save_clean_results = document.getElementById('save-clean-results');
+btn_save_clean_results.onclick = function(){
+	var save_path = dialog.showSaveDialog({
+		filters: [{
+		  name: 'JSON lines file',
+		  extensions: ['jsonl']
+		}]
+		});
+	for(i=0;i<clean_output.length;i++){
+		fs.appendFile(save_path,JSON.stringify(clean_output[i])+"\n");
+	}
+}
 
 // next button:
 var btn_to_analyse = document.getElementById('to-analyse');

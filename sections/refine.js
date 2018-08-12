@@ -10,7 +10,7 @@ function updateRefineInputTable(){
 	document.getElementById("filter-input-count").innerHTML = "    " + String(filter_input.length);
 };
 
-function loadFiles_filter(){
+function loadFiles_filter(files){
 	for(var i=0; i<files.length;i++){
 		var file_content = fs.readFileSync(files[i]);
 		var tweets = String(file_content).trim().split("\n");
@@ -75,7 +75,7 @@ var regex = document.getElementById("regex-filter");
 var open_button = document.getElementById("open-refine-tweets");
 open_button.onclick = function(){
 	files = dialog.showOpenDialog();
-	loadFiles_filter();
+	loadFiles_filter(files);
 };
 
 // clear input
