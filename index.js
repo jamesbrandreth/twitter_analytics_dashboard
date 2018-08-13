@@ -1,15 +1,15 @@
-const {app, BrowserWindow, Menu, dialog} = require("electron");
+const {app, BrowserWindow, Menu, dialog, ipcMain} = require("electron");
 
 //main process
-const path = require('path')
-const url = require('url')
+const path = require('path');
+const url = require('url');
 
 let win
 
 function createWindow(){
     win = new BrowserWindow({width: 1600, height: 900, resizable: false, titleBarStyle: 'hiddenInset'});
     win.loadFile("index.html");
-    win.webContents.openDevTools();
+    // win.webContents.openDevTools();
     var template = [{
         label: "Application",
         submenu: [
@@ -29,6 +29,18 @@ function createWindow(){
         ]}
     ];
     Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+
+    ipcMain.on('show_child', (event, file) => {
+        var child_window = new BrowserWindow({width: 600, height: 600, show: false, titleBarStyle: 'hiddenInset'});
+        child_window.loadFile(file);
+        child_window.show();
+
+        child_window.on('close', function(){
+            child_window.hide();
+            event.preventDefault();
+        })
+    });
+
 
     win.on('closed', () =>{
         win = null
