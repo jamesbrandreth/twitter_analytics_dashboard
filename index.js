@@ -30,10 +30,16 @@ function createWindow(){
     ];
     Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 
-    ipcMain.on('show_child', (event, file) => {
+    ipcMain.on('show_child', (event, file, data) => {
         var child_window = new BrowserWindow({width: 600, height: 600, show: false, titleBarStyle: 'hiddenInset'});
         child_window.loadFile(file);
         child_window.show();
+        child_window.webContents.openDevTools();
+
+        // Send variables to child window
+        ipcMain.on('send-me-data', (event) => {
+            event.sender.send('data', data);
+        })
 
         child_window.on('close', function(){
             child_window.hide();

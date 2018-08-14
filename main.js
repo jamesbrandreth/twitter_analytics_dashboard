@@ -25,21 +25,3 @@ var clean_input = new Array;
 var clean_output = new Array;
 
 var analysis_input = new Array;
-
-// var files = new Array;
-
-// function updateFileTable(){
-//     var table = document.getElementById('data-files');
-//     table.innerHTML = "";
-//     for (var i = 0; i < files.length; i++){
-//         var row = table.insertRow(i);
-//         row.innerHTML = files[i];
-//     }
-// };
-
-// var open_button = document.getElementById("open-refine-tweets");
-// open_button.onclick = function(){
-//     files = dialog.showOpenDialog({properties: ['openFile', 'multiSelections']});
-//     updateFileTable();
-// };
-

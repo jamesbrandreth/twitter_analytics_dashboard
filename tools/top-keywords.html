@@ -1,18 +1,26 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title><!--TITLE--></title>
+        <title>Top Keywords></title>
         <link rel="stylesheet" href="../assets/button.css">
         <link rel="stylesheet" href="../photon/dist/css/photon.css">
     </head>
     <body>
         <div class="window">
-            <div class="padded-more" style="-webkit-app-region: drag">
-                <!-- TITLE -->
+            <div class="padded-more" style="text-align: center; -webkit-app-region: drag">
+                <strong>Top Keywords</strong>
             </div>
             <div class="padded-more">
-                <!-- BODY -->
+                <label>Number:</label>
+                <input type="number" id="tk-number" class="form-control">
+            </div>
+            <div class="padded-more">
+                <div style="height:400px;width:100%;overflow:auto;border: 1px solid; border-radius: 4px; border-color: lightgrey">
+                    <table class="table-striped" id="tk-results-table">
+                    </table>
+            </div>
             </div>
         </div>
+        <script src="top-keywords.js"></script>
     </body>
 </html>

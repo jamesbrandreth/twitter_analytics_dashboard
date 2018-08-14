@@ -99,6 +99,13 @@ clean_open_button.onclick = function(){
     loadFiles_clean(files);
 };
 
+// clear input
+var  btn_clean_clear_input = document.getElementById("clear-clean-tweets");
+btn_clean_clear_input.onclick = function(){
+	clean_input = [];
+	updateCleanInputTable();
+};
+
 // Save Parameters
 var save_clean_parameters = document.getElementById('save-clean-parameters');
 save_clean_parameters.onclick = function(){
@@ -178,5 +185,5 @@ var btn_to_analyse = document.getElementById('to-analyse');
 btn_to_analyse.onclick = function(){
     showPanel(3);
     analysis_input = clean_output;
-    // updateAnalyseInputTable();
+    updateAnalyseInputTable();
 };
