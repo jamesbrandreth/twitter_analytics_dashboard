@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><!--TITLE--></title>
+        <link rel="stylesheet" href="../assets/button.css">
+        <link rel="stylesheet" href="../photon/dist/css/photon.css">
+    </head>
+    <body>
+        <div class="window">
+            <div class="padded-more" style="text-align: center; -webkit-app-region: drag">
+                <strong>Keyword Frequency</strong>
+            </div>
+            <div class="padded-more">
+                <div class="padded-more">
+                    <label>Keyword</label>
+                    <input type="text" id="keyword" class="form-control">
+                    <label>Time division</label>
+                    <select class="form-control" id="time-increment">
+                        <option>1 minute</option>
+                        <!-- <option>15 minutes</option> -->
+                        <!-- <option>30 minutes</option> -->
+                        <option>1 hour</option>
+                        <option>1 day</option>
+                        <!-- <option>1 week</option> -->
+                    </select>
+                </div>
+                <div class="padded-more" id="plot">
+
+                </div>
+                <div class="padded-more">
+                    <span class="button button-save" id="export-raw">Export CSV</span>
+                    <span class="button button-save" id="export-png">Export PNG</span>
+                </div>
+            </div>
+        </div>
+        <script src="keyword-timeseries.js"></script>
+    </body>
+</html>
