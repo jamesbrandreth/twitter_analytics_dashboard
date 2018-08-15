@@ -41,7 +41,6 @@ function findTopTokens(number){
 function updateResultsTable(tokens){
     var table = document.getElementById('tk-results-table');
     table.innerHTML = "";
-    var string = "";
     for(var i=0;i<tokens.length;i++){
         var row = table.insertRow(i);
         var cell1 = row.insertCell(0);
