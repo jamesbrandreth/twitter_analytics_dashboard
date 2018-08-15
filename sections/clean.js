@@ -40,11 +40,13 @@ function loadFiles_clean(files){
 function cleanTweet(tweet, parameters){
     var text = tweet.text;
     if(parameters.rm_urls==true){
-
+        text = text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, '');
     }
     if(parameters.lowercase==true){
         text = nlp.string.lowerCase(text);
     }
+    text = text.replace(/^rt /g ,'');
+    text = text.replace(/[']/g,'');
     if(parameters.alphanumerics==true){
         text = nlp.string.retainAlphaNums(text);
     }
