@@ -2,7 +2,6 @@ const {ipcRenderer} = require('electron');
 const plotly = require('../plotly/plotly-latest.min.js');
 var analysis_input = {};
 
-var input_keyword = document.getElementById('keyword');
 var input_time    = document.getElementById('time-increment');
 
 function interpretTimeDiv(text){
@@ -29,7 +28,6 @@ function interpretTimeDiv(text){
 }
 
 function generateMinuteSeries(){
-    var keyword = input_keyword.value;
     var time_div = input_time.value;
     var unix_time_div = interpretTimeDiv(time_div);
 
@@ -37,7 +35,7 @@ function generateMinuteSeries(){
     var array_counts = new Array;
     var indices = {};
 
-    var time_series = {word: keyword, division: time_div, counts: [], times: []};
+    var time_series = {division: time_div, counts: [], times: []};
 
     var last_tweet_time = new Date(analysis_input[0].original.created_at);
     var first_tweet_time = new Date(analysis_input[0].original.created_at);

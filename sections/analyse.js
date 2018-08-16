@@ -17,6 +17,10 @@ var btn_os = document.getElementById('overall-sentiment');
 btn_os.onclick = function(){
     showChildWindow('./tools/overall-sentiment.html');
 };
+var btn_tt = document.getElementById('total-timeseries');
+btn_tt.onclick = function(){
+    showChildWindow('./tools/total-timeseries.html');
+};
 var btn_kt = document.getElementById('keyword-timeseries');
 btn_kt.onclick = function(){
     showChildWindow('./tools/keyword-timeseries.html');

@@ -31,7 +31,7 @@ function createWindow(){
     Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 
     ipcMain.on('show_child', (event, file, data) => {
-        var child_window = new BrowserWindow({width: 600, height: 600, show: false, titleBarStyle: 'hiddenInset'});
+        var child_window = new BrowserWindow({width: 1000, height: 1000, show: false, titleBarStyle: 'hiddenInset'});
         child_window.loadFile(file);
         child_window.show();
         child_window.webContents.openDevTools();
