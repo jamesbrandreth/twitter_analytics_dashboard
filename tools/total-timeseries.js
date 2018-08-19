@@ -12,16 +12,6 @@ function totalVolume(array_tweets){
     return array_tweets.length;
 }
 
-function plotTimeseries(time_series){
-    var data = [{
-        x: time_series.times,
-        y: time_series.values,
-        fill: 'tozeroy',
-        type: 'line'
-    }];
-    plotly.plot('plot',data);
-}
-
 function exportCSV(data){
     var filepath = dialog.showSaveDialog({
         filters: [{
@@ -42,7 +32,7 @@ ipcRenderer.on('data', (event, data) => {
 var btn_go = document.getElementById('go');
 btn_go.onclick = function(){
     ts = timeseries.generateTimeSeries(input_time.value,analysis_input,totalVolume);
-    plotTimeseries(ts);
+    timeseries.plot('plot',ts);
 }
 
 var btn_csv = document.getElementById('export-raw');

@@ -92,5 +92,14 @@ module.exports = {
         // console.log(indices);
         // console.log(time_series);
         return time_series;
-    }
+    },
+    plot: function(id,time_series){
+    var data = [{
+        x: time_series.times,
+        y: time_series.values,
+        fill: 'tozeroy',
+        type: 'line'
+    }];
+    plotly.plot(id,data);
+}
 };
