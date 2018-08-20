@@ -35,8 +35,10 @@
     "twit": "^2.2.11",
     "wink": "0.0.1",
     "wink-bm25-text-search": "^2.0.5",
+    "wink-helpers": "^1.5.0",
     "wink-lemmatizer": "^2.0.0",
-    "wink-nlp-utils": "^1.9.0"
+    "wink-nlp-utils": "^1.9.0",
+    "wink-pos-tagger": "^1.5.0"
   },
   "build": {
     "appId": "harvester.id",

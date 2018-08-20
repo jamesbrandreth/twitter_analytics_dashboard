@@ -1,8 +1,23 @@
 
 const nlp = require('wink-nlp-utils');
+const postagger = require('wink-pos-tagger');
+var tagger = postagger();
 // const bm25 = require('wink-bm25-text-search');
 // const posTagger = require( 'wink-pos-tagger' );
 
+function lemmatize(tweet_tokens){
+    var tweet_lemmas = new Array(tweet_tokens.length);
+    var tags = tagger.tag(tweet_tokens);
+    for(var i=0; i<tweet_tokens.length;i++){
+        tag = tags[i];
+        if(tags.hasOwnProperty('lemma')){
+            tweet_lemmas[i] = tag.lemma;
+        }else{
+            tweet_lemmas[i] = tag.value;
+        }
+    }
+    return tweet_lemmas;
+}
 
 // Read Parameters from screen
 function readParameters(){
@@ -34,11 +49,19 @@ function cleanTweet(tweet, parameters){
         text = nlp.string.retainAlphaNums(text);
     }
     // remove small words
-    //XXXXXXXXXXXXXXXXXXXX
+    if(parameters.stopwords==true){
+        text = text.replace(/\b\w{1,3}\b/g,'');
+    }
     // remove stop words
     var tokens = nlp.string.tokenize(text);
     if(parameters.stopwords==true){
         tokens = nlp.tokens.removeWords(tokens);
+    }
+    if(parameters.stem==true){
+        tokens = nlp.tokens.stem(tokens);
+    }
+    if(parameters.lemmatize==true){
+        tokens = lemmatize(tokens);
     }
     return tokens;
 };
