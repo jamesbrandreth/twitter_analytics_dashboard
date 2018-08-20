@@ -32,10 +32,10 @@ module.exports = {
 
         var time_series = {division: time_div, counts: [], times: []};
 
-        var last_tweet_time = new Date(input_tweets[0].original.created_at);
-        var first_tweet_time = new Date(input_tweets[0].original.created_at);
+        var last_tweet_time = new Date(input_tweets[0].raw.created_at);
+        var first_tweet_time = new Date(input_tweets[0].raw.created_at);
         for(var i=0; i<input_tweets.length;i++){
-            var time_i = new Date(input_tweets[i].original.created_at);
+            var time_i = new Date(input_tweets[i].raw.created_at);
             if(time_i.getTime() > last_tweet_time.getTime()){
                 last_tweet_time = time_i;
             }else if(time_i.getTime() < first_tweet_time.getTime()){
@@ -72,7 +72,7 @@ module.exports = {
             i++;
         }
         for(var i=0; i<input_tweets.length; i++){
-            var t = new Date(input_tweets[i].original.created_at);
+            var t = new Date(input_tweets[i].raw.created_at);
             t.setSeconds(0);
             if(time_div=="1 hour"||time_div=="1 day"){
                 t.setUTCMinutes(0);

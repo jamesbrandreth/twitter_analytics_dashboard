@@ -84,7 +84,8 @@ function loadRawTweets(index_array){
 
 function loadCleanedTweets(index_array){
     // get filepaths from dialog
-    var filepaths = dialog.showOpenDialog({
+    var filepaths = [];
+    filepaths = dialog.showOpenDialog({
         filters: [{name: 'TAD tweets file', extensions: ['TADt']}]
     });
     // load those tweets

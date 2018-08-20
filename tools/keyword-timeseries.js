@@ -3,7 +3,6 @@ const plotly = require('../plotly/plotly-latest.min.js');
 const fs = require('fs');
 const timeseries = require('./timeseries.js');
 const {dialog} = require('electron').remote;
-const 
 
 var analysis_input = {};
 var ts = null;
@@ -15,8 +14,8 @@ function keywordFractionFunction(keyword){
         var n_with_keyword = 0;
         var n_total = tweets.length;
         for(var i=0; i<n_total;i++){
-            if(tweets[i].original.text.includes(keyword) || tweets[i].cleaned.join(' ').includes(keyword)){
-                n_with_keyword =+ 100;
+            if(tweets[i].raw.text.includes(keyword) || tweets[i].cleaned.join(' ').includes(keyword)){
+                n_with_keyword =+ 1;
             }
         }
         console.log(n_with_keyword);

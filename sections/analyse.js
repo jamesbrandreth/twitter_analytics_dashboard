@@ -2,6 +2,10 @@ const {ipcRenderer} = require('electron')
 
 showChildWindow = function(filename){
     console.log(filename);
+    var analysis_input = new Array(analysis_input_indices.length);
+    for(var i=0;i<analysis_input_indices.length;i++){
+        analysis_input[i] = tweets[analysis_input_indices[i]];
+    }
     ipcRenderer.send('show_child',filename, analysis_input);
 };
 
@@ -38,12 +42,12 @@ btn_st.onclick = function(){
 var analysis_open_button = document.getElementById("open-analyse-tweets");
 analysis_open_button.onclick = function(){
 	analysis_input_indices = loadCleanedTweets(analysis_input_indices);
-	updateTableCleaned(analysis_input_indices,"analysis-input-table","analysis-input-count");
+	updateTableCleaned(analysis_input_indices,"analyse-input-table","analyse-input-count");
 };
 
 // clear input
 var  btn_analysis_clear_input = document.getElementById("clear-analyse-tweets");
 btn_analysis_clear_input.onclick = function(){
 	analysis_input_indices = [];
-	updateTableCleaned(analysis_input_indices,"analysis-input-table","analysis-input-count");
+	updateTableCleaned(analysis_input_indices,"analyse-input-table","analyse-input-count");
 };
