@@ -1,28 +1,7 @@
 var files = new Array;
 
-function updateRefineInputTable(){
-	var table = document.getElementById('filter-input');
-	table.innerHTML = "";
-	for (var i = 0; i < filter_input.length; i++){
-		var row = table.insertRow(i);
-		row.innerHTML = filter_input[i].text.substring(0,50);
-	};
-	document.getElementById("filter-input-count").innerHTML = "    " + String(filter_input.length);
-};
-
-function loadFiles_filter(files){
-	for(var i=0; i<files.length;i++){
-		var file_content = fs.readFileSync(files[i]);
-		var tweets = String(file_content).trim().split("\n");
-		for(var j=0; j<tweets.length; j ++){
-			filter_input.push(JSON.parse(tweets[j]));
-		}
-	};
-	updateRefineInputTable();
-};
-
 function tweetIsRetweet(tweet){
-	if(tweet.hasOwnProperty('retweeted_status')){
+	if(tweet.raw.hasOwnProperty('retweeted_status')){
 		return true;
 	}else{
 		return false;
@@ -30,7 +9,7 @@ function tweetIsRetweet(tweet){
 };
 
 function tweetIsReply(tweet){
-	if(tweet.in_reply_to_status_id != null){
+	if(tweet.raw.in_reply_to_status_id != null){
 		return true;
 	}else{
 		return false;
@@ -38,7 +17,7 @@ function tweetIsReply(tweet){
 };
 
 function tweetMatchesRegex(tweet,regex){
-	return RegExp(regex).test(tweet.text);
+	return RegExp(regex).test(tweet.raw.text);
 };
 
 function isInList(obj,list){
@@ -50,20 +29,29 @@ function isInList(obj,list){
 	return false;
 };
 
-function updateRefineResultsTable(){
-	var table = document.getElementById('refine-results-table');
-	table.innerHTML = "";
-	for (var i = 0; i < filter_output.length; i++){
-		var row = table.insertRow(i);
-		var cell1 = row.insertCell(0);
-		var cell2 = row.insertCell(1);
-		var cell3 = row.insertCell(2);
-		cell1.innerHTML = filter_output[i].user.screen_name;
-		cell2.innerHTML = filter_output[i].text.substring(0,65);
-		cell3.innerHTML = filter_output[i].created_at;
+function passes(tweet){
+	if(checkbox_retweets.checked==false){
+		if(tweetIsRetweet(tweet)){
+			return false;
+		}
+	};
+	if(checkbox_replies.checked==false){
+		if(tweetIsReply(tweet)){
+			return false;
+		}
+	};
+	if(checkbox_duplicates.checked==true){
+		if(isInList(tweet,filter_output)){
+			return false;
+		}
+	};
+	if(regex.value != ""){
+		if(!tweetMatchesRegex(tweet,regex.value)){
+			return false;
+		}
 	}
-	document.getElementById("refine-count").innerHTML = "    " + String(filter_output.length);
-};
+	return true;
+}
 
 // options:
 var checkbox_retweets = document.getElementById("include-retweets");
@@ -74,15 +62,15 @@ var regex = document.getElementById("regex-filter");
 // load files
 var open_button = document.getElementById("open-refine-tweets");
 open_button.onclick = function(){
-	files = dialog.showOpenDialog();
-	loadFiles_filter(files);
+	filter_input_indices = loadRawTweets(filter_input_indices);
+	updateTableRaw(filter_input_indices,"filter-input","filter-input-count");
 };
 
 // clear input
 var  btn_refine_clear_input = document.getElementById("clear-refine-tweets");
 btn_refine_clear_input.onclick = function(){
-	filter_input = [];
-	updateRefineInputTable();
+	filter_input_indices = [];
+	updateTableRaw(filter_input_indices,"filter-input","filter-input-count");
 };
 
 // save filters
@@ -121,64 +109,33 @@ btn_clear_filters.onclick = function(){
 // Apply filters and update table
 var btn_apply_filters = document.getElementById("filter");
 btn_apply_filters.onclick = function(){
-	filter_output = new Array;
-	for(var i=0; i<filter_input.length;i++){
-		var pass = true;
-		tweet = filter_input[i];
-		// console.log(tweet.text);
-		if(checkbox_retweets.checked==false){
-			if(tweetIsRetweet(tweet)){
-				pass = false;
-			}
-		};
-		if(checkbox_replies.checked==false){
-			if(tweetIsReply(tweet)){
-				pass = false;
-			}
-		};
-		if(checkbox_duplicates.checked==true){
-			if(isInList(tweet,filter_output)){
-				pass = false;
-			}
-		};
-		if(regex.value != ""){
-			if(!tweetMatchesRegex(tweet,regex.value)){
-				pass = false;
-			}
-		}
-		// console.log(String(pass));
-		if(pass){
-			filter_output.push(tweet);
+	filter_output_indices = new Array;
+	for(var i=0; i<filter_input_indices.length;i++){
+		var tweet = tweets[filter_input_indices[i]];
+		if(passes(tweet)){
+			filter_output_indices.push(i);
 		}
 	};
-	updateRefineResultsTable();
+	updateTableRaw(filter_output_indices,"filter-results-table","filter-output-count");
 };
 
 // Results saving:
 var save_refine_results_button = document.getElementById('save-filter-results');
 save_refine_results_button.onclick = function(){
-	var save_path = dialog.showSaveDialog({
-		filters: [{
-		  name: 'JSON lines file',
-		  extensions: ['jsonl']
-		}]
-		});
-	for(i=0;i<filter_output.length;i++){
-		fs.appendFile(save_path,JSON.stringify(filter_output[i])+"\n");
-	}
+	saveRawTweets(filter_output_indices);
 }
 
 // Clear Results:
 var btn_clear_refine_results = document.getElementById('clear-filter-results');
 btn_clear_refine_results.onclick = function(){
-	filter_output = new Array;
-	updateRefineResultsTable();
+	filter_output_indices = new Array;
+	updateTableRaw(filter_output_indices,"filter-results-table","filter-output-count");
 };
 
-// To clean:
+// To clean (NEXT):
 var btn_to_clean = document.getElementById("to-clean");
 btn_to_clean.onclick = function(){
 	showPanel(2);
-	clean_input = filter_output;
-	updateCleanInputTable();
+	clean_input_indices = filter_output_indices;
+	updateTableRaw(clean_input_indices,"clean-input","clean-input-count");
 };

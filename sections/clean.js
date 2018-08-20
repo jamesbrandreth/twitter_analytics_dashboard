@@ -16,40 +16,26 @@ function readParameters(){
     return parameters;
 };
 
-function updateCleanInputTable(){
-    var table = document.getElementById('clean-input');
-    table.innerHTML = "";
-    for (var i = 0; i < clean_input.length; i++){
-        var row = table.insertRow(i);
-        row.innerHTML = clean_input[i].text.substring(0,50);
-    };
-    document.getElementById("clean-input-count").innerHTML = "    " + String(clean_input.length);
-};
-
-function loadFiles_clean(files){
-    for(var i=0; i<files.length;i++){
-        var file_content = fs.readFileSync(files[i]);
-        var tweets = String(file_content).trim().split("\n");
-        for(var j=0; j<tweets.length; j ++){
-            clean_input.push(JSON.parse(tweets[j]));
-        }
-    };
-    updateCleanInputTable();
-};
-
 function cleanTweet(tweet, parameters){
-    var text = tweet.text;
+    var text = tweet.raw.text;
+    // remove urls
     if(parameters.rm_urls==true){
         text = text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, '');
     }
+    // lowercase
     if(parameters.lowercase==true){
         text = nlp.string.lowerCase(text);
     }
+    // remove retweet markers (NB is a property of the object, so info not lost)
     text = text.replace(/^rt /g ,'');
     text = text.replace(/[']/g,'');
+    // limit to letters and numbers
     if(parameters.alphanumerics==true){
         text = nlp.string.retainAlphaNums(text);
     }
+    // remove small words
+    //XXXXXXXXXXXXXXXXXXXX
+    // remove stop words
     var tokens = nlp.string.tokenize(text);
     if(parameters.stopwords==true){
         tokens = nlp.tokens.removeWords(tokens);
@@ -57,55 +43,32 @@ function cleanTweet(tweet, parameters){
     return tokens;
 };
 
-function processTweets(tweets,parameters){
-    var tweets_set = new Array;
-
-    for(var i=0;i<tweets.length;i++){
-        tweets_set.push({'original': tweets[i], 'cleaned': cleanTweet(tweets[i],parameters)});
+function processTweets(tweet_indices,parameters){
+    for(var i=0;i<tweet_indices.length;i++){
+        tweets[tweet_indices[i]].cleaned = cleanTweet(tweets[tweet_indices[i]],parameters);
     }
-    return tweets_set;
 }
-
-function stringifyTweet(tweet){
-    var str_tweet = '';
-    var tweet = tweet['cleaned'];
-    for(var i=0;i<tweet.length;i++){
-        str_tweet += ' ' + tweet[i];
-    };
-    return str_tweet;
-};
-
-function updateCleanResultsTable(){
-    var table = document.getElementById('clean-results-table');
-    table.innerHTML = "";
-    for (var i = 0; i < clean_output.length; i++){
-        var row = table.insertRow(i);
-        console.log(clean_output[i]['cleaned'])
-        row.innerHTML = stringifyTweet(clean_output[i]).substring(0,70);
-    }
-    document.getElementById("clean-count").innerHTML = "    " + String(clean_output.length);
-};
 
 // GO!
 var btn_clean = document.getElementById('clean');
 btn_clean.onclick = function(){
-    console.log('click');
-    clean_output = processTweets(clean_input,readParameters());
-    updateCleanResultsTable();
+    clean_output_indices = clean_input_indices;
+    processTweets(clean_input_indices,readParameters());
+	updateTableCleaned(clean_output_indices,"clean-results-table","clean-output-count");
 }
 
 // load files
 var clean_open_button = document.getElementById("open-clean-tweets");
 clean_open_button.onclick = function(){
-    var files = dialog.showOpenDialog();
-    loadFiles_clean(files);
+	clean_input_indices = loadRawTweets(clean_input_indices);
+	updateTableRaw(clean_input_indices,"clean-input","clean-input-count");
 };
 
 // clear input
 var  btn_clean_clear_input = document.getElementById("clear-clean-tweets");
 btn_clean_clear_input.onclick = function(){
-	clean_input = [];
-	updateCleanInputTable();
+	clean_input_indices = [];
+	updateTableRaw(clean_input_indices,"clean-input","clean-input-count");
 };
 
 // Save Parameters
@@ -164,28 +127,20 @@ checkbox_stem.onchange = function(){
 // discard results:
 var btn_clear_clean_results = document.getElementById('clear-clean-results');
 btn_clear_clean_results.onclick = function(){
-    clean_output = null;
-    updateCleanResultsTable();
+    clean_output_indices = [];
+    updateTableCleaned(clean_output_indices,"clean-results-table","clean-output-count");
 }
 
 // save results:
 var btn_save_clean_results = document.getElementById('save-clean-results');
 btn_save_clean_results.onclick = function(){
-	var save_path = dialog.showSaveDialog({
-		filters: [{
-		  name: 'JSON lines file',
-		  extensions: ['jsonl']
-		}]
-		});
-	for(i=0;i<clean_output.length;i++){
-		fs.appendFile(save_path,JSON.stringify(clean_output[i])+"\n");
-	}
+	saveFullTweets(clean_output_indices);
 }
 
 // next button:
 var btn_to_analyse = document.getElementById('to-analyse');
 btn_to_analyse.onclick = function(){
     showPanel(3);
-    analysis_input = clean_output;
-    updateAnalyseInputTable();
+    analysis_input_indices = clean_output_indices;
+    updateTableCleaned(analysis_input_indices,"analyse-input-table","analyse-input-count");
 };

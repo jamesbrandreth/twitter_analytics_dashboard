@@ -28,27 +28,19 @@ btn_save_keys.onclick = function(){
 	};
 };
 
-function updateResultsTable(){
-	var table = document.getElementById('tweet_table');
-	table.innerHTML = "";
-	for (var i = 0; i < harvest_output.length; i++){
-		var row = table.insertRow(i);
-		var cell1 = row.insertCell(0);
-		var cell2 = row.insertCell(1);
-		var cell3 = row.insertCell(2);
-		cell1.innerHTML = harvest_output[i].screen_name;
-		cell2.innerHTML = harvest_output[i].text.substring(0,70);
-		cell3.innerHTML = harvest_output[i].created_at;
-	}
-	document.getElementById("search-count").innerHTML = "    " + String(harvest_output.length);
-};
-
 function gotData(err, data, response){
-	var tweets = data.statuses;
-	for (var i = 0; i < tweets.length; i++){
-		harvest_output.push(tweets[i]);
+	var incoming_tweet_list = data.statuses;
+	var array_length = incoming_tweet_list.length;
+	var existing_tweet_array_length = tweets.length;
+	var new_indices = new Array(array_length);
+	var new_tweet_objects = new Array(array_length);
+	for (var i = 0; i < array_length; i++){
+		new_tweet_objects[i] = new Tweet(incoming_tweet_list[i],[],null);
+		new_indices[i] = existing_tweet_array_length + i;
 	}
-	updateResultsTable();
+	tweets = tweets.concat(new_tweet_objects);
+	harvest_output_indices = harvest_output_indices.concat(new_indices);
+	updateTableRaw(harvest_output_indices,"harvest-results-table","harvest-output-count");
 };
 
 function searchTwitter(query,number){
@@ -135,28 +127,20 @@ search_button.onclick = function() {
 // Results saving:
 var save_results_button = document.getElementById('save-results');
 save_results_button.onclick = function(){
-	var save_path = dialog.showSaveDialog({
-		filters: [{
-		  name: 'JSON lines file',
-		  extensions: ['jsonl']
-		}]
-		});
-	for(i=0;i<harvest_output.length;i++){
-		fs.appendFile(save_path,JSON.stringify(harvest_output[i])+"\n");
-	}
+	saveRawTweets(harvest_output_indices);
 }
 
 // Clear Results:
 var btn_clear_results = document.getElementById('clear-results');
 btn_clear_results.onclick = function(){
-	harvest_output = new Array;
-	updateResultsTable();
+	harvest_output_indices = [];
+	updateTableRaw(harvest_output_indices,"harvest-results-table","harvest-output-count");
 };
 
 // To clean:
 var btn_to_filter = document.getElementById("to-filter");
 btn_to_filter.onclick = function(){
 	showPanel(1);
-	filter_input = harvest_output;
-	updateRefineInputTable();
+	filter_input_indices = harvest_output_indices;
+	updateTableRaw(filter_input_indices,"filter-input","filter-input-count");
 };
