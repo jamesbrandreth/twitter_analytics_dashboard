@@ -113,7 +113,7 @@ btn_apply_filters.onclick = function(){
 	for(var i=0; i<filter_input_indices.length;i++){
 		var tweet = tweets[filter_input_indices[i]];
 		if(passes(tweet)){
-			filter_output_indices.push(i);
+			filter_output_indices.push(filter_input_indices[i]);
 		}
 	};
 	updateTableRaw(filter_output_indices,"filter-results-table","filter-output-count");

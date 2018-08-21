@@ -9,7 +9,7 @@ let win
 function createWindow(){
     win = new BrowserWindow({width: 1600, height: 900, resizable: false, titleBarStyle: 'hiddenInset'});
     win.loadFile("index.html");
-    win.webContents.openDevTools();
+    // win.webContents.openDevTools();
     var template = [{
         label: "Application",
         submenu: [
@@ -34,7 +34,7 @@ function createWindow(){
         var child_window = new BrowserWindow({width: 1000, height: 1000, show: false, titleBarStyle: 'hiddenInset'});
         child_window.loadFile(file);
         child_window.show();
-        child_window.webContents.openDevTools();
+        // child_window.webContents.openDevTools();
 
         // Send variables to child window
         ipcMain.on('send-me-data', (event) => {
