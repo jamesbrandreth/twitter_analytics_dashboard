@@ -31,6 +31,7 @@
     "menu": "^0.2.5",
     "natural": "^0.6.1",
     "plotly": "^1.0.6",
+    "sentiment": "^5.0.1",
     "string": "^3.3.3",
     "twit": "^2.2.11",
     "wink": "0.0.1",
@@ -38,7 +39,8 @@
     "wink-helpers": "^1.5.0",
     "wink-lemmatizer": "^2.0.0",
     "wink-nlp-utils": "^1.9.0",
-    "wink-pos-tagger": "^1.5.0"
+    "wink-pos-tagger": "^1.5.0",
+    "wink-sentiment": "^4.0.2"
   },
   "build": {
     "appId": "harvester.id",

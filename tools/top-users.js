@@ -6,7 +6,7 @@ var analysis_input = {};
 function countUsers(){
     var users = {};
     for(var i=0;i<analysis_input.length;i++){
-        var user = analysis_input[i].original.user.screen_name;
+        var user = analysis_input[i].raw.user.screen_name;
         if(user in users){
             users[user] += 1;
         }else{

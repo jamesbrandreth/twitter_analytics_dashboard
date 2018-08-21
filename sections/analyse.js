@@ -29,12 +29,13 @@ var btn_kt = document.getElementById('keyword-timeseries');
 btn_kt.onclick = function(){
     showChildWindow('./tools/keyword-timeseries.html');
 };
-var btn_ut = document.getElementById('user-timeseries');
-btn_ut.onclick = function(){
-    showChildWindow('./tools/user-timeseries.html');
-};
+// var btn_ut = document.getElementById('user-timeseries');
+// btn_ut.onclick = function(){
+//     showChildWindow('./tools/user-timeseries.html');
+// };
 var btn_st = document.getElementById('sentiment-timeseries');
 btn_st.onclick = function(){
+    console.log("click");
     showChildWindow('./tools/sentiment-timeseries.html');
 };
 
