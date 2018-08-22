@@ -256,6 +256,33 @@ ipcRenderer.on('data', (event, data) => {
     analysis_input = data;
 })
 
+// Show hidden fields:
+var data_menu = document.getElementById('type');
+var div_keyword = document.getElementById('keyword_div');
+var div_user = document.getElementById('user_div');
+var div_topic = document.getElementById('topic_div');
+data_menu.onchange = function(){
+    console.log("click");
+    val = data_menu.value;
+    if(val=="User Tweet Frequency"){
+        div_keyword.style.display = "none";
+        div_user.style.display = "block";
+        div_topic.style.display = "none";
+    }else if(val=="Topic Presence"||val=="Topic Sentiment"){
+        div_keyword.style.display = "none";
+        div_user.style.display = "none";
+        div_topic.style.display = "block";
+    }else if(val=="Keyword Frequency"||val=="Keyword Sentiment"||val=="Keyword TF-IDF"){
+        div_keyword.style.display = "block";
+        div_user.style.display = "none";
+        div_topic.style.display = "none";
+    }else{
+        div_keyword.style.display = "none";
+        div_user.style.display = "none";
+        div_topic.style.display = "none";
+    }
+}
+
 var title_box = document.getElementById('title');
 title_box.onkeyup = function(event){
     chart.title = title_box.value;
