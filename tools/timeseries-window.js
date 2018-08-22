@@ -321,7 +321,8 @@ btn_add.onclick = function(){
         case "User Tweet Frequency":
             break;
         case "Keyword Frequency":
-            metric_function = keywordFractionFunction;
+        var word = document.getElementById('keyword').value;
+            metric_function = keywordFractionFunction(word);
             break;
         case "Keyword TF-IDF":
             break;
