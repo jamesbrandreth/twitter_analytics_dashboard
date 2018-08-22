@@ -22,6 +22,23 @@ function tweetSentiment(array_tweets){
     }
 }
 
+function exportPNG(plot_id){
+    plotly.toImage(plot_id, {format: 'png', width: 2000, height: 500}).then(function(dataUrl){
+        var data = window.atob(dataUrl.substring( "data:image/png;base64,".length ));
+        var asArray = new Uint8Array(data.length);
+        for( var i = 0, len = data.length; i < len; ++i ) {
+            asArray[i] = data.charCodeAt(i);    
+        }
+        var filepath = dialog.showSaveDialog({
+            filters: [{
+                name: 'PNG file',
+                extensions: ['png']
+            }]
+        });
+        fs.writeFile(filepath,asArray);
+    })
+}
+
 function exportCSV(data){
     var filepath = dialog.showSaveDialog({
         filters: [{
@@ -48,4 +65,9 @@ btn_go.onclick = function(){
 var btn_csv = document.getElementById('export-raw');
 btn_csv.onclick = function(){
     exportCSV(ts);
+}
+
+var btn_png = document.getElementById('export-png');
+btn_png.onclick = function(){
+    exportPNG('plot');
 }

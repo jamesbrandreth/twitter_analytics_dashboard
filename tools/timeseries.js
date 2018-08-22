@@ -1,3 +1,4 @@
+
 function interpretTimeDiv(text){
     switch(text){
         case "1 minute":
@@ -97,9 +98,9 @@ module.exports = {
     var data = [{
         x: time_series.times,
         y: time_series.values,
-        fill: 'tozeroy',
+        fill: 'none',
         type: 'line'
     }];
     plotly.plot(id,data);
-}
+    }
 };

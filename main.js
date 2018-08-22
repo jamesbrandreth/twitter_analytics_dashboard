@@ -36,18 +36,6 @@ var clean_output_indices = new Array;
 
 var analysis_input_indices = new Array;
 
-// Initialising Results Arrays:
-var harvest_output = new Array;
-
-var filter_input = new Array;
-var filter_output = new Array;
-
-var clean_input = new Array;
-var clean_output = new Array;
-
-var analysis_input = new Array;
-
-
 function stringifyTweet(tweet){
     var str_tweet = '';
     var tweet_tokens = tweet.cleaned;
