@@ -99,7 +99,7 @@ module.exports = {
         x: time_series.times,
         y: time_series.values,
         fill: 'none',
-        type: 'line'
+        type: 'bar'
     }];
     plotly.plot(id,data);
     }

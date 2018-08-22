@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Timeseries</title>
+        <link rel="stylesheet" href="../assets/button.css">
+        <link rel="stylesheet" href="../style.css">
+        <link rel="stylesheet" href="../photon/dist/css/photon.css">
+    </head>
+    <body>
+        <div class="window">
+            <div class="padded-more" style="text-align: center; -webkit-app-region: drag">
+                <div style="color: lightgrey; font-size: 20pt; text-align: right; font-weight: bolder; padding-right: 20px; padding-bottom: 0px">TIMESERIES</div>
+            </div>
+            <div class="padded">
+                <div class="pane-group">
+                    <div class="pane pane-one-half">
+                            <div class="padded">
+                                <div style="border-top: solid lightgrey 1pt; text-align: left; padding-top: 10px; color: lightgrey">
+                                        CHART PROPERTIES:
+                                </div>
+                                <div class="container">
+                                    <div><input class="form-control" id="title" placeholder="Plot title"></div>
+                                    <div><input class="form-control" id="x" placeholder="X-Axis Title"></div>
+                                    <div><input class="form-control" id="y" placeholder="Y-Axis Title"></div>
+                                </div>
+                                <div style="border-top: solid lightgrey 1pt; text-align: left; padding-top: 10px; color: lightgrey">
+                                        ADD SERIES:
+                                </div>
+                                <div class="container">
+                                    <div>
+                                        <label>Series name:</label>
+                                        <input class="form-control" id="series-name">
+                                    </div>
+                                </div>
+                                <div class="container">
+                                    <div>
+                                        <label>Time division:</label>
+                                        <select class="form-control" id="time-increment">
+                                            <option>1 minute</option>
+                                            <!-- <option>15 minutes</option> -->
+                                            <!-- <option>30 minutes</option> -->
+                                            <option>1 hour</option>
+                                            <option>1 day</option>
+                                            <!-- <option>1 week</option> -->
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label>Chart Type:</label>
+                                        <select class="form-control" id="series-type">
+                                            <option>line</option>
+                                            <option>area</option>
+                                            <option>bar</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label>Data:</label>
+                                        <select class="form-control" id="type">
+                                            <option>Total Tweet Volume</option>
+                                            <option>Topic Presence</option>
+                                            <option>User Tweet Frequency</option>
+                                            </option>
+                                            <option>Keyword Frequency</option>
+                                            <option>Keyword TF-IDF</option>
+                                            <option>Overall Sentiment</option>
+                                            <option>Keyword Sentiment</option>
+                                            <option>Topic Sentiment</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="container">
+                                    <div>
+                                        <label>Keyword:</label>
+                                        <input class="form-control" id="keyword">
+                                    </div>
+                                    <div>
+                                        <label>Topic:</label>
+                                        <select class="form-control" id="select-topic"></select>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="padded-more" style="text-align: right">
+                                    <div class="button button-action" style="font-weight: bolder" id="add">+</div>
+                                </div>
+                                <div style="border-top: solid lightgrey 1pt; text-align: left; padding-top: 10px; color: lightgrey">
+                                        REMOVE SERIES:
+                                </div>
+                                <div class="container">
+                                    <div>
+                                        <label>Series to remove:</label>
+                                        <select class="form-control" id="select-delete">
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="padded-more" style="text-align: right">
+                                    <div class="button button-clear" style="color: palevioletred; font-weight: bolder" id="delete">-</div>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="pane pane-one-half">
+                            <div class="padded-more" style="height: 300px" id="plot">
+            
+                            </div>
+                            <div class="padded-more">
+                                <span class="button button-save" id="export-raw">Export CSV</span>
+                                <span class="button button-save" id="export-png">Export PNG</span>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="timeseries-window.js"></script>
+    </body>
+</html>

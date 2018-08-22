@@ -38,6 +38,10 @@ btn_st.onclick = function(){
     console.log("click");
     showChildWindow('./tools/sentiment-timeseries.html');
 };
+var btn_ts = document.getElementById('timeseries');
+btn_ts.onclick = function(){
+    showChildWindow('./tools/timeseries.html')
+}
 
 // load files
 var analysis_open_button = document.getElementById("open-analyse-tweets");

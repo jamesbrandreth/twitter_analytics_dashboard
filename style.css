@@ -27,6 +27,18 @@
     transform: translateY(1px);
 }
 
+.container > div
+{
+    padding: 10px
+}
+
+.container
+{
+    display: inline-flex;
+    text-align: left;
+    width: 100%;
+}   
+
 .horizonal-pane-group{
 	display: flex;
 	flex-direction: column;
