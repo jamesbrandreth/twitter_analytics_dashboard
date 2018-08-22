@@ -9,6 +9,9 @@ var analysis_input = {};
 var input_time = document.getElementById('time-increment');
 var ts = null;
 
+document.getElementById('width').value = 2000;
+document.getElementById('height').value = 500;
+
 var chart = {};
 chart.title = "";
 chart.x_label = "";
@@ -42,7 +45,13 @@ function updatePlot(){
       };
     for(var series_name in chart.plots){
         var series = chart.plots[series_name];
-        data.push({x:series.x,y:series.y,name:series.name,type:series.type});
+        var fill = 'none';
+        var type = series.type;
+        if(series.type=="area"){
+            type = 'line';
+            fill = 'tozeroy'
+        }
+        data.push({x:series.x,y:series.y,name:series.name,fill:fill,type:type});
     }
     console.log(data);
     plotly.newPlot('plot',data,layout);
@@ -212,7 +221,9 @@ function removeSeries(series_name){
 }
 
 function exportPNG(plot_id){
-    plotly.toImage(plot_id, {format: 'png', width: 2000, height: 500}).then(function(dataUrl){
+    var width = document.getElementById('width').value;
+    var height = document.getElementById('height').value;
+    plotly.toImage(plot_id, {format: 'png', width: width, height: height}).then(function(dataUrl){
         var data = window.atob(dataUrl.substring( "data:image/png;base64,".length ));
         var asArray = new Uint8Array(data.length);
         for( var i = 0, len = data.length; i < len; ++i ) {
@@ -272,7 +283,29 @@ y_box.onkeyup = function(event){
 var btn_add = document.getElementById('add');
 btn_add.onclick = function(){
     var series_type = document.getElementById('')
-
+    var type = document.getElementById('type').value;
+    metric_function = totalVolume;
+    switch(type){
+        case "Total Tweet Volume":
+            metric_function = totalVolume;
+            break;
+        case "Topic Presence":
+            break;
+        case "User Tweet Frequency":
+            break;
+        case "Keyword Frequency":
+            metric_function = keywordFractionFunction;
+            break;
+        case "Keyword TF-IDF":
+            break;
+        case "Overall Sentiment":
+            metric_function = tweetSentiment;
+            break;
+        case "Keyword Sentiment":
+            break;
+        case "Topic Sentiment":
+            break;
+    }
     ts = generateTimeSeries(input_time.value,analysis_input,metric_function);
     console.log(ts);
     addSeries(ts);
