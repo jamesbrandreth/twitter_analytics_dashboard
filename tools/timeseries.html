@@ -9,7 +9,7 @@
     <body>
         <div class="window">
             <div class="padded-more" style="text-align: center; -webkit-app-region: drag">
-                <div style="color: lightgrey; font-size: 20pt; text-align: right; font-weight: bolder; padding-right: 20px; padding-bottom: 0px">TIMESERIES</div>
+                <div style="color: lightgrey; font-size: 20pt; text-align: right; font-weight: bolder; padding-right: 20px; padding-bottom: 0px">TAD//timeseries</div>
             </div>
             <div class="padded">
                 <div class="pane-group">
@@ -78,7 +78,9 @@
                                 <div style="display: none;" id="topic_div">
                                     <label>Topic:</label>
                                     <select class="form-control" id="select-topic"></select>
-                                    </select>
+                                    <div style="text-align: left; padding-top: 5px; color: lightgrey">
+                                        To generate topics, run topic detection on the tweet set, then relaunch the timeseries window.
+                                    </div>
                                 </div>
                             </div>
                             <div class="padded-more" style="text-align: right">
@@ -101,28 +103,28 @@
                         </div>
                     </div>
                     <div class="pane pane-one-half">
-                            <div class="padded-more" style="height: 300px" id="plot">
-            
+                        <div class="padded-more" style="height: 300px" id="plot">
+        
+                        </div>
+                        <div class="padded">
+                            <div style="border-top: solid lightgrey 1pt; text-align: left; padding-top: 10px; color: lightgrey">
+                                    EXPORT:
                             </div>
-                            <div class="padded">
-                                <div style="border-top: solid lightgrey 1pt; text-align: left; padding-top: 10px; color: lightgrey">
-                                        EXPORT DIMENSIONS:
+                            <div class="container">
+                                <div>
+                                    <label>width:</label>
+                                    <input class="form-control" id="width" type="number" placeholder="px" width="10px">
                                 </div>
-                                <div class="container">
-                                    <div>
-                                        <label>width:</label>
-                                        <input class="form-control" id="width" type="number" placeholder="px" width="10px">
-                                    </div>
-                                    <div>
-                                        <label>height:</label>
-                                        <input class="form-control" id="height" type="number" placeholder="px" width="10px">
-                                    </div>
+                                <div>
+                                    <label>height:</label>
+                                    <input class="form-control" id="height" type="number" placeholder="px" width="10px">
                                 </div>
                             </div>
-                            <div class="padded-more">
-                                <span class="button button-save" id="export-raw">Export CSV</span>
-                                <span class="button button-save" id="export-png">Export PNG</span>
-                            </div>
+                        </div>
+                        <div class="padded-more">
+                            <span class="button button-save" id="export-raw">Export CSV</span>
+                            <span class="button button-save" id="export-png">Export PNG</span>
+                        </div>
                     </div>
                 </div>
             </div>

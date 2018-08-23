@@ -42,6 +42,10 @@ var btn_ts = document.getElementById('timeseries');
 btn_ts.onclick = function(){
     showChildWindow('./tools/timeseries.html')
 }
+var btn_td = document.getElementById('topic');
+btn_td.onclick = function(){
+    showChildWindow('./tools/topic.html')
+}
 
 // load files
 var analysis_open_button = document.getElementById("open-analyse-tweets");

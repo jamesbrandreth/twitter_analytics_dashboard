@@ -9,7 +9,7 @@ let win
 function createWindow(){
     win = new BrowserWindow({width: 1600, height: 900, resizable: false, titleBarStyle: 'hiddenInset'});
     win.loadFile("index.html");
-    // win.webContents.openDevTools();
+    win.webContents.openDevTools();
     var template = [{
         label: "Application",
         submenu: [

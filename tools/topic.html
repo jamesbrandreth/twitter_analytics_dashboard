@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Topic Detection</title>
+        <link rel="stylesheet" href="../assets/button.css">
+        <link rel="stylesheet" href="../style.css">
+        <link rel="stylesheet" href="../photon/dist/css/photon.css">
+    </head>
+    <body>
+        <div class="window">
+            <div class="padded-more" style="text-align: center; -webkit-app-region: drag">
+                <div style="color: lightgrey; font-size: 20pt; text-align: right; font-weight: bolder; padding-right: 20px; padding-bottom: 0px">TAD//topic</div>
+            </div>
+            <div class="padded">
+                <div class="pane-group">
+                    <div class="pane pane-one-half">
+                        <div class="padded">
+                            <div style="border-top: solid lightgrey 1pt; text-align: left; padding-top: 10px; color: lightgrey">
+                                    LATENT DIRICHLET ALLOCATION:
+                            </div>
+                            <div class="container">
+                                <div>
+                                    <label>Number of topics:</label>
+                                    <input class="form-control" id="n-topics" type="number">
+                                </div>
+                                <div>
+                                    <label>Words per topic:</label>
+                                    <input class="form-control" id="n-words" type="number">
+                                </div>
+                            </div>
+                            <div style="text-align: right">
+                                <div class="button button-action" id="get-topics">Get topics</div>
+                                <div class="button button-action" id="tag-tweets">Tag tweets</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pane pane-one-half">
+                        <div class="padded">
+                            <div style="border-top: solid lightgrey 1pt; text-align: left; padding-top: 10px; color: lightgrey">
+                                    TOPICS:
+                            </div>
+                            <div>
+                                <table class="table-striped" id="topic-table">
+
+                                </table>
+                            </div>
+                            <div style="border-top: solid lightgrey 1pt; text-align: left; padding-top: 10px; color: lightgrey">
+                                    TWEETS:
+                            </div>
+                            <table class="table-striped" id="tweet-table">
+                                
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="topic.js"></script>
+    </body>
+</html>

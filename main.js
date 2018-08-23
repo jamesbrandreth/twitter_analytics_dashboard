@@ -12,10 +12,14 @@ var lodash = require('lodash');
 const path_app_data = app.getPath('userData');
 
 class Tweet{
-    constructor(raw,cleaned,features){
+    constructor(raw,cleaned){
         this.raw = raw;
         this.cleaned = cleaned;
-        this.features = features;
+        this.features = {
+            topics_tags: [],
+            sentiment: null,
+            toptic_scores : []
+        }
     }
 }
 
@@ -61,7 +65,7 @@ function loadRawTweets(index_array){
         var file_tweets = new Array(array_length);
         var new_indices = new Array(array_length)
         for(var j=0;j<file_tweets.length;j++){
-            file_tweets[j] = new Tweet(JSON.parse(file_content_array[j]),[],null);
+            file_tweets[j] = new Tweet(JSON.parse(file_content_array[j]),[]);
             new_indices[j] = existing_tweet_array_length + j;
         }
         tweets = tweets.concat(file_tweets);

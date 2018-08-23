@@ -35,12 +35,17 @@ function updatePlot(){
     var data = [];
     var layout = {
         title: chart.title,
+        titlefont: {
+          family: "helvetica"
+        },
         showlegend:true,
         xaxis: {
-          title: chart.x_label
+          title: chart.x_label,
+          family: "helvetica"
         },
         yaxis: {
-          title: chart.y_label
+          title: chart.y_label,
+          family: "helvetica"
         }
       };
     for(var series_name in chart.plots){
@@ -160,16 +165,6 @@ function generateTimeSeries(time_div,input_tweets,metric){
     // console.log(indices);
     // console.log(time_series);
     return time_series;
-}
-
-function plot(id,time_series){
-    var data = [{
-        x: time_series.times,
-        y: time_series.values,
-        fill: 'none',
-        type: 'bar'
-    }];
-    plotly.plot(id,data);
 }
 
 function totalVolume(array_tweets){
