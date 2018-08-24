@@ -9,11 +9,11 @@ let win
 function createWindow(){
     win = new BrowserWindow({width: 1600, height: 900, resizable: false, titleBarStyle: 'hiddenInset'});
     win.loadFile("index.html");
-    win.webContents.openDevTools();
+    // win.webContents.openDevTools();
     var template = [{
         label: "Application",
         submenu: [
-            { label: "About Tweet Analyser", selector: "orderFrontStandardAboutPanel:" },
+            { label: "About TAD", selector: "orderFrontStandardAboutPanel:" },
             { type: "separator" },
             { label: "Quit", accelerator: "Command+Q", click: function() { app.quit(); }}
         ]}, {

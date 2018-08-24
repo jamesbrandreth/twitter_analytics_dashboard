@@ -16,9 +16,9 @@ class Tweet{
         this.raw = raw;
         this.cleaned = cleaned;
         this.features = {
-            topics_tags: [],
+            topics_tag: null,
             sentiment: null,
-            toptic_scores : []
+            topic_scores : []
         }
     }
 }
