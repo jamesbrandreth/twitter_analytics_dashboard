@@ -7,11 +7,12 @@ var n_words = document.getElementById('n-words');
 var n_topics = document.getElementById('n-topics');
 
 var topics = new Array;
+var topic_list = new Array;
 
 var input_tweets = new Array;
 
 ipcRenderer.send('send-me-data');
-ipcRenderer.on('data', (event, data) => {
+ipcRenderer.on('data', (event, data, t_placeholder) => {
     input_tweets = data;
 })
 
@@ -38,8 +39,17 @@ function updateTopicTable(topics){
     }
 }
 
-function updateTweetTable(){
-
+function updateTweetTable(tweets){
+    var table = document.getElementById('tweet-table');
+    table.innerHTML = "";
+    for(var i=0;i<tweets.length;i++){
+        var tweet = tweets[i];
+        var row = table.insertRow(i);
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        cell1.innerHTML = tweet.features.topic_tag.topic;
+        cell2.innerHTML = tweet.raw.text.substring(0,70);
+    }
 }
 
 function scoreTweet(tweet,topics){
@@ -73,15 +83,16 @@ function tagTweets(topics){
     }
 }
 
-var btn_topics = document.getElementById('get-topics');
-btn_topics.onclick = function(){
+var btn_go = document.getElementById('go');
+btn_go.onclick = function(){
     topics = getTopics(input_tweets,n_topics.value,n_words.value);
     updateTopicTable(topics);
-}
-
-var btn_tag = document.getElementById('tag-tweets');
-btn_tag.onclick = function(){
     tagTweets(topics);
+    updateTweetTable(input_tweets);
+    var features = new Array(input_tweets.length);
+    for(var i=0; i<features.length;i++){
+        features[i] = input_tweets[i].features;
+    }
+    ipcRenderer.send('topic-data-a',features,topics);
     console.log(input_tweets);
-
 }

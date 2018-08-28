@@ -24,13 +24,12 @@
                                     <input class="form-control" id="n-topics" type="number">
                                 </div>
                                 <div>
-                                    <label>Words per topic:</label>
+                                    <label>Max words per topic:</label>
                                     <input class="form-control" id="n-words" type="number">
                                 </div>
                             </div>
                             <div style="text-align: right">
-                                <div class="button button-action" id="get-topics">Get topics</div>
-                                <div class="button button-action" id="tag-tweets">Tag tweets</div>
+                                <div class="button button-action" id="go">Go</div>
                             </div>
                         </div>
                     </div>
@@ -39,17 +38,15 @@
                             <div style="border-top: solid lightgrey 1pt; text-align: left; padding-top: 10px; color: lightgrey">
                                     TOPICS:
                             </div>
-                            <div>
-                                <table class="table-striped" id="topic-table">
-
-                                </table>
+                            <div style="height:200px;width:100%;overflow:auto;padding-top:20px;border: 1px solid; border-radius: 4px; border-color: lightgrey">
+                                <table class="table-striped" id="topic-table"></table>
                             </div>
                             <div style="border-top: solid lightgrey 1pt; text-align: left; padding-top: 10px; color: lightgrey">
                                     TWEETS:
                             </div>
-                            <table class="table-striped" id="tweet-table">
-                                
-                            </table>
+                            <div style="height:200px;width:100%;overflow:auto;padding-top:20px;border: 1px solid; border-radius: 4px; border-color: lightgrey">
+                                <table class="table-striped" id="tweet-table"></table> 
+                            </div>
                         </div>
                     </div>
                 </div>

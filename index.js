@@ -9,7 +9,7 @@ let win
 function createWindow(){
     win = new BrowserWindow({width: 1600, height: 900, resizable: false, titleBarStyle: 'hiddenInset'});
     win.loadFile("index.html");
-    // win.webContents.openDevTools();
+    win.webContents.openDevTools();
     var template = [{
         label: "Application",
         submenu: [
@@ -30,7 +30,7 @@ function createWindow(){
     ];
     Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 
-    ipcMain.on('show_child', (event, file, data) => {
+    ipcMain.on('show_child', (event, file, data, topics) => {
         var child_window = new BrowserWindow({width: 1300, height: 700, show: false, titleBarStyle: 'hiddenInset'});
         child_window.loadFile(file);
         child_window.show();
@@ -38,7 +38,11 @@ function createWindow(){
 
         // Send variables to child window
         ipcMain.on('send-me-data', (event) => {
-            event.sender.send('data', data);
+            event.sender.send('data', data, topics);
+        })
+
+        ipcMain.on('topic-data-a', (event,data,topics) => {
+            win.webContents.send('topic-data-b',data,topics);
         })
 
         child_window.on('close', function(){

@@ -5,6 +5,7 @@ const timeseries = require('./timeseries.js');
 const {dialog} = require('electron').remote;
 var sentiment = require( 'wink-sentiment' );
 
+var topics;
 var analysis_input = {};
 var input_time = document.getElementById('time-increment');
 var ts = null;
@@ -60,6 +61,15 @@ function updatePlot(){
     }
     console.log(data);
     plotly.newPlot('plot',data,layout);
+}
+
+function updateTopicList(topics){
+    console.log(topics);
+    var list = document.getElementById('select-topic');
+    list.innerHTML = "";
+    for(var i=0;i<topics.length;i++){
+        list.innerHTML += "\n<option>" + String(i+1) + "</option>";
+    }
 }
 
 function updateDeleteList(){
@@ -186,6 +196,30 @@ function keywordFractionFunction(keyword){
     }
 }
 
+function topicPresenceFunction(topic){
+    return function(tweets){
+        var bin_topic_score = 0;
+        for(var i=0; i<tweets.length;i++){
+            bin_topic_score += tweets[i].features.topic_scores[topic].score;
+        }
+        return bin_topic_score;
+    }
+}
+
+function topicFractionFunction(topic){
+    return function(tweets){
+        var bin_topic_score = 0;
+        var bin_all_topics_score = 0;
+        for(var i=0; i<tweets.length;i++){
+            bin_topic_score += tweets[i].features.topic_scores[topic].score;
+            for(var j=0; j<topics.length;j++){
+                bin_all_topics_score += tweets[i].features.topic_scores[j].score;
+            }
+        }
+        return bin_topic_score/bin_all_topics_score;
+    }
+}
+
 function tweetSentiment(array_tweets){
     var length = array_tweets.length;
     var total_score = 0;
@@ -247,8 +281,10 @@ function exportCSV(data){
 }
 
 ipcRenderer.send('send-me-data');
-ipcRenderer.on('data', (event, data) => {
+ipcRenderer.on('data', (event, data, topic_list) => {
     analysis_input = data;
+    topics = topic_list;
+    updateTopicList(topics);
 })
 
 // Show hidden fields:
@@ -263,7 +299,7 @@ data_menu.onchange = function(){
         div_keyword.style.display = "none";
         div_user.style.display = "block";
         div_topic.style.display = "none";
-    }else if(val=="Topic Presence"||val=="Topic Sentiment"){
+    }else if(val=="Topic Presence (absolute)"||val=="Topic Sentiment"||val=="Topic Presence (fraction)"){
         div_keyword.style.display = "none";
         div_user.style.display = "none";
         div_topic.style.display = "block";
@@ -311,12 +347,18 @@ btn_add.onclick = function(){
         case "Total Tweet Volume":
             metric_function = totalVolume;
             break;
-        case "Topic Presence":
+        case "Topic Presence (absolute)":
+            var topic = Number(document.getElementById('select-topic').value)-1;
+            metric_function = topicPresenceFunction(topic);
+            break;
+        case "Topic Presence (fraction)":
+            var topic = Number(document.getElementById('select-topic').value)-1;
+            metric_function = topicFractionFunction(topic);
             break;
         case "User Tweet Frequency":
             break;
         case "Keyword Frequency":
-        var word = document.getElementById('keyword').value;
+            var word = document.getElementById('keyword').value;
             metric_function = keywordFractionFunction(word);
             break;
         case "Keyword TF-IDF":

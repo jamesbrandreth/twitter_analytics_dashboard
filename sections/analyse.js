@@ -1,12 +1,21 @@
 const {ipcRenderer} = require('electron')
 
+// recvieving tagged tweets back
+ipcRenderer.on('topic-data-b', (event, data,topic_list) => {
+    topics = topic_list;
+    for(var i=0; i<analysis_input_indices.length; i++){
+        tweets[analysis_input_indices[i]].features = data[i];
+    }
+    console.log(tweets);
+})
+
 showChildWindow = function(filename){
     console.log(filename);
     var analysis_input = new Array(analysis_input_indices.length);
     for(var i=0;i<analysis_input_indices.length;i++){
         analysis_input[i] = tweets[analysis_input_indices[i]];
     }
-    ipcRenderer.send('show_child',filename, analysis_input);
+    ipcRenderer.send('show_child',filename, analysis_input, topics);
 };
 
 var btn_tk = document.getElementById('top-keywords');
@@ -20,23 +29,6 @@ btn_tu.onclick = function(){
 var btn_os = document.getElementById('overall-sentiment');
 btn_os.onclick = function(){
     showChildWindow('./tools/overall-sentiment.html');
-};
-var btn_tt = document.getElementById('total-timeseries');
-btn_tt.onclick = function(){
-    showChildWindow('./tools/total-timeseries.html');
-};
-var btn_kt = document.getElementById('keyword-timeseries');
-btn_kt.onclick = function(){
-    showChildWindow('./tools/keyword-timeseries.html');
-};
-// var btn_ut = document.getElementById('user-timeseries');
-// btn_ut.onclick = function(){
-//     showChildWindow('./tools/user-timeseries.html');
-// };
-var btn_st = document.getElementById('sentiment-timeseries');
-btn_st.onclick = function(){
-    console.log("click");
-    showChildWindow('./tools/sentiment-timeseries.html');
 };
 var btn_ts = document.getElementById('timeseries');
 btn_ts.onclick = function(){

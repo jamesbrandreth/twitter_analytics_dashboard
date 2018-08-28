@@ -29,6 +29,7 @@ var default_language
 
 // Initialising Array of Tweets:
 var tweets = new Array;
+var topics = new Array;
 
 var harvest_output_indices = new Array;
 
