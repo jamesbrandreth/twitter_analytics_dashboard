@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Timeseries</title>
+        <link rel="stylesheet" href="../assets/button.css">
+        <link rel="stylesheet" href="../style.css">
+        <link rel="stylesheet" href="../photon/dist/css/photon.css">
+    </head>
+    <body>
+        <div class="window">
+            <div class="padded-more" style="text-align: center; -webkit-app-region: drag">
+                <div style="color: lightgrey; font-size: 20pt; text-align: right; font-weight: bolder; padding-right: 20px; padding-bottom: 0px">TAD//cluster</div>
+            </div>
+            <div class="padded">
+                <div class="pane-group">
+                    <div class="pane pane-one-half">
+                        <div class="padded">
+                            <div style="border-top: solid lightgrey 1pt; text-align: left; padding-top: 10px; color: lightgrey">
+                                    CHART PROPERTIES:
+                            </div>
+                            <div class="container">
+                                <div><input class="form-control" id="title" placeholder="Plot title"></div>
+                            </div>
+                            <div style="border-top: solid lightgrey 1pt; text-align: left; padding-top: 10px; color: lightgrey">
+                                    CLUSTER:
+                            </div>
+                            <div class="container">
+                                <div>
+                                    <label>Algorithm:</label>
+                                    <select class="form-control" id="algorithm">
+                                        <option>K-Means</option>
+                                        <option>DBSCAN</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="container" id="DBSCAN-options">
+                                <div>
+                                    <label>Cluster radius:</label>
+                                    <input class="form-control" type="number" id="cluster-radius">
+                                </div>
+                                <div>
+                                    <label>Minimum cluster size:</label>
+                                    <input class="form-control" type="number" id="cluster-radisizeus">
+                                </div>
+                            </div>
+                            <div class="container" id="kmeans-options">
+                                <div>
+                                    <label>Number of clusters:</label>
+                                    <input class="form-control" type="number" id="cluster-number">
+                                </div>
+                            </div>
+                            <div class="padded-more" style="text-align: right">
+                                <div class="button button-action" style="font-weight: bolder" id="go">go</div>
+                            </div>
+                            <div class="padded">
+                                <div style="border-top: solid lightgrey 1pt; text-align: left; padding-top: 10px; color: lightgrey">
+                                        EXPORT:
+                                </div>
+                                <div class="container">
+                                    <div>
+                                        <label>width:</label>
+                                        <input class="form-control" id="width" type="number" placeholder="px" width="10px">
+                                    </div>
+                                    <div>
+                                        <label>height:</label>
+                                        <input class="form-control" id="height" type="number" placeholder="px" width="10px">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="padded-more">
+                                <span class="button button-save" id="export-raw">Export a cluster</span>
+                                <span class="button button-save" id="export-png">Export PNG</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pane pane-one-half">
+                        <div style="height: 400px">
+                            <div class="padded-more" style="height: 400px" id="splom-plot"></div>
+                            <div class="padded-more" style="height: 400px" id="star-plot"></div>
+                        </div>
+                        <div style="text-align: center">
+                            <span class="button button-action" id="splom-button">Splom</span>
+                            <span class="button button-action" id="star-button">Star</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="cluster.js"></script>
+    </body>
+</html>

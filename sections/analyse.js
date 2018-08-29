@@ -38,6 +38,10 @@ var btn_td = document.getElementById('topic');
 btn_td.onclick = function(){
     showChildWindow('./tools/topic.html')
 }
+var btn_c = document.getElementById('cluster');
+btn_c.onclick = function(){
+    showChildWindow('./tools/cluster.html')
+}
 
 // load files
 var analysis_open_button = document.getElementById("open-analyse-tweets");

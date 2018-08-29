@@ -19,16 +19,17 @@
 
 .button-default{
     background-color: white;
-    border-color: darkslategrey;
+    border-color: rgb(128, 167, 226);
     color: black;
     text-emphasis: bold;
 }
 .button-default:hover{
-    background-color: darkslategrey;
+    background-color: rgb(128, 167, 226);
+    border-color: rgb(128, 167, 226);
     color: white;
 }
 .button-default:active{
-    background-color: darkgrey;
+    background-color: rgb(65, 105, 165);
     color: white;
 }
 
